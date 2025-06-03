@@ -1,222 +1,351 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>مقياس GAD-7 لتقييم القلق</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 20px;
-            min-height: 100vh;
-            -webkit-text-size-adjust: 100%;
-        }
-        .container {
-            background-color: white;
-            padding: 25px;
-            border-radius: 15px;
-            max-width: 600px;
-            margin: 0 auto;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        h1 {
-            color: #3a506b;
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
-        h1:after {
-            content: "";
-            display: block;
-            width: 80px;
-            height: 4px;
-            background: #5fb0b7;
-            margin: 15px auto;
-            border-radius: 2px;
-        }
-        .question {
-            text-align: right;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        .question-label {
-            font-size: 18px;
-            color: #3a506b;
-            font-weight: 500;
-            margin-bottom: 10px;
-        }
-        .options {
-            text-align: right;
-        }
-        .option {
-            display: inline-block;
-            margin: 5px 10px;
-        }
-        input[type="radio"] {
-            margin-left: 5px;
-            transform: scale(1.2);
-            accent-color: #5fb0b7;
-        }
-        button {
-            padding: 12px 30px;
-            font-size: 16px;
-            background: linear-gradient(to right, #5fb0b7, #3a506b);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 500;
-            margin-top: 10px;
-            box-shadow: 0 4px 15px rgba(95, 176, 183, 0.3);
-            transition: all 0.3s ease;
-        }
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(95, 176, 183, 0.4);
-        }
-        .result {
-            margin-top: 30px;
-            font-weight: 600;
-            font-size: 18px;
-            color: #3a506b;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            border-left: 4px solid #5fb0b7;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qissah.AI - منصة رواية القصص بالذكاء الاصطناعي</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&family=Almarai:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #8a5cf5;
+      --secondary: #6b4fc0;
+      --dark: #1c1c1c;
+      --darker: #0c0c0c;
+      --light: #f5f5f5;
+    }
 
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            .container {
-                padding: 20px;
-                max-width: 95%;
-            }
-            .question {
-                margin-bottom: 20px;
-            }
-            .question-label {
-                font-size: 20px;
-            }
-            .option {
-                display: block;
-                margin: 10px 0;
-                padding: 10px;
-                background-color: #f5f7fa;
-                border-radius: 5px;
-            }
-            input[type="radio"] {
-                transform: scale(1.5);
-                margin-left: 10px;
-            }
-            button {
-                width: 100%;
-                padding: 15px;
-                margin-top: 20px;
-            }
-            .result {
-                font-size: 18px;
-                padding: 12px;
-            }
-        }
-    </style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(135deg, #7034b7 0%, #0c0c0c 100%);
+      color: white;
+      min-height: 100vh;
+    }
+
+    .brand-font {
+      font-family: 'Almarai', sans-serif;
+    }
+
+    .sidebar {
+      background: linear-gradient(to bottom, #3a265a 0%, #1c1c1c 100%);
+      box-shadow: -4px 0 15px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+
+    .sidebar:hover {
+      transform: translateX(0);
+    }
+
+    .nav-item {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .nav-item:hover {
+      color: var(--primary);
+      transform: translateX(-5px);
+    }
+
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      right: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s ease;
+    }
+
+    .nav-item:hover::after {
+      width: 100%;
+    }
+
+    .main-card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .search-bar {
+      background: rgba(28, 28, 28, 0.7);
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .search-bar:focus-within {
+      box-shadow: 0 0 0 2px var(--primary);
+      transform: scale(1.02);
+    }
+
+    .filter-btn {
+      background: rgba(28, 28, 28, 0.7);
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .filter-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .filter-selected {
+      background: var(--secondary);
+      box-shadow: 0 0 10px rgba(138, 92, 245, 0.5);
+    }
+
+    .avatar {
+      transition: all 0.3s ease;
+    }
+
+    .avatar:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 0 3px var(--primary);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary:hover {
+      background: var(--secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 7px 14px rgba(138, 92, 245, 0.4);
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(138, 92, 245, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(138, 92, 245, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(138, 92, 245, 0); }
+    }
+
+    .rtl-direction {
+      direction: rtl;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
+    }
+  </style>
 </head>
-<body>
-    <div class="container">
-        <h1>مقياس GAD-7 لتقييم القلق</h1>
-        <form id="gadForm">
-            <div class="question">
-                <label class="question-label">1. شعرت بالتوتر أو القلق أو التهيج؟</label>
-                <div class="options">
-                    <label class="option"><input type="radio" name="q1" value="0"> أبدًا</label>
-                    <label class="option"><input type="radio" name="q1" value="1"> لعدة أيام</label>
-                    <label class="option"><input type="radio" name="q1" value="2"> أكثر من نصف الأيام</label>
-                    <label class="option"><input type="radio" name="q1" value="3"> تقريبًا كل يوم</label>
-                </div>
-            </div>
-            <div class="question">
-                <label class="question-label">2. عدم القدرة على التوقف عن القلق أو السيطرة عليه؟</label>
-                <div class="options">
-                    <label class="option"><input type="radio" name="q2" value="0"> أبدًا</label>
-                    <label class="option"><input type="radio" name="q2" value="1"> لعدة أيام</label>
-                    <label class="option"><input type="radio" name="q2" value="2"> أكثر من نصف الأيام</label>
-                    <label class="option"><input type="radio" name="q2" value="3"> تقريبًا كل يوم</label>
-                </div>
-            </div>
-            <div class="question">
-                <label class="question-label">3. القلق الزائد بشأن أمور مختلفة؟</label>
-                <div class="options">
-                    <label class="option"><input type="radio" name="q3" value="0"> أبدًا</label>
-                    <label class="option"><input type="radio" name="q3" value="1"> لعدة أيام</label>
-                    <label class="option"><input type="radio" name="q3" value="2"> أكثر من نصف الأيام</label>
-                    <label class="option"><input type="radio" name="q3" value="3"> تقريبًا كل يوم</label>
-                </div>
-            </div>
-            <div class="question">
-                <label class="question-label">4. صعوبة في الاسترخاء؟</label>
-                <div class="options">
-                    <label class="option"><input type="radio" name="q4" value="0"> أبدًا</label>
-                    <label class="option"><input type="radio" name="q4" value="1"> لعدة أيام</label>
-                    <label class="option"><input type="radio" name="q4" value="2"> أكثر من نصف الأيام</label>
-                    <label class="option"><input type="radio" name="q4" value="3"> تقريبًا كل يوم</label>
-                </div>
-            </div>
-            <div class="question">
-                <label class="question-label">5. الشعور بالتوتر لدرجة عدم القدرة على الجلوس بهدوء؟</label>
-                <div class="options">
-                    <label class="option"><input type="radio" name="q5" value="0"> أبدًا</label>
-                    <label class="option"><input type="radio" name="q5" value="1"> لعدة أيام</label>
-                    <label class="option"><input type="radio" name="q5" value="2"> أكثر من نصف الأيام</label>
-                    <label class="option"><input type="radio" name="q5" value="3"> تقريبًا كل يوم</label>
-                </div>
-            </div>
-            <div class="question">
-                <label class="question-label">6. سهولة الانزعاج أو الانفعال؟</label>
-                <div class="options">
-                    <label class="option"><input type="radio" name="q6" value="0"> أبدًا</label>
-                    <label class="option"><input type="radio" name="q6" value="1"> لعدة أيام</label>
-                    <label class="option"><input type="radio" name="q6" value="2"> أكثر من نصف الأيام</label>
-                    <label class="option"><input type="radio" name="q6" value="3"> تقريبًا كل يوم</label>
-                </div>
-            </div>
-            <div class="question">
-                <label class="question-label">7. الشعور بالخوف من أن شيئًا سيئًا قد يحدث؟</label>
-                <div class="options">
-                    <label class="option"><input type="radio" name="q7" value="0"> أبدًا</label>
-                    <label class="option"><input type="radio" name="q7" value="1"> لعدة أيام</label>
-                    <label class="option"><input type="radio" name="q7" value="2"> أكثر من نصف الأيام</label>
-                    <label class="option"><input type="radio" name="q7" value="3"> تقريبًا كل يوم</label>
-                </div>
-            </div>
-            <button type="button" onclick="calculateGAD()">عرض النتيجة</button>
-        </form>
-        <div class="result" id="result"></div>
+<body class="flex rtl-direction">
+  <!-- Sidebar -->
+  <aside class="sidebar w-56 h-screen p-6 flex flex-col justify-between fixed right-0">
+    <div>
+      <h1 class="text-2xl mb-8 text-white brand-font flex items-center">
+        <i class="fas fa-robot text-purple-400 ml-2"></i>
+        قصص.AI
+      </h1>
+      <nav class="space-y-4">
+        <a href="#" class="block text-white text-sm font-medium nav-item flex items-center" onclick="navigate('home')">
+          <i class="fas fa-home ml-3 w-4 text-center"></i>
+          الرئيسية
+        </a>
+        <a href="#" class="block text-white text-sm font-medium nav-item flex items-center" onclick="navigate('chats')">
+          <i class="fas fa-comment-dots ml-3 w-4 text-center"></i>
+          المحادثات
+        </a>
+        <hr class="my-4 border-gray-600">
+        <div class="text-white text-xs font-bold mb-2 uppercase tracking-wider text-gray-400">روبوتات الدردشة</div>
+        <a href="#" class="block text-white text-sm font-medium nav-item flex items-center" onclick="navigate('create-bot')">
+          <i class="fas fa-plus-circle ml-3 w-4 text-center"></i>
+          إنشاء روبوت
+        </a>
+        <a href="#" class="block text-white text-sm font-medium nav-item flex items-center" onclick="navigate('my-bots')">
+          <i class="fas fa-robot ml-3 w-4 text-center"></i>
+          روبوتاتي
+        </a>
+        <a href="#" class="block text-white text-sm font-medium nav-item flex items-center" onclick="navigate('favorites')">
+          <i class="fas fa-star ml-3 w-4 text-center"></i>
+          المفضلة
+        </a>
+        <a href="#" class="block text-white text-sm font-medium nav-item flex items-center" onclick="navigate('top-10')">
+          <i class="fas fa-trophy ml-3 w-4 text-center"></i>
+          أفضل 10
+        </a>
+      </nav>
+    </div>
+    <button class="btn-primary text-white font-bold py-3 rounded-lg flex items-center justify-center" onclick="login()">
+      <i class="fas fa-sign-in-alt ml-2"></i>
+      تسجيل الدخول
+    </button>
+  </aside>
+
+  <!-- Main content -->
+  <main class="flex-1 p-10 relative mr-56">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-10">
+      <h1 class="text-4xl text-white font-bold brand-font">
+        <span class="text-cyan-400">قصص</span><span class="text-purple-500">.AI</span>
+      </h1>
+      <div class="flex items-center gap-4">
+        <div class="relative group">
+          <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-200"></div>
+          <div class="relative">
+            <img src="images/NAX.png" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-white avatar cursor-pointer" onclick="showProfile()">
+          </div>
+        </div>
+        <div>
+          <div class="text-sm font-medium">أنس</div>
+          <div class="text-xs text-gray-400">عضو مميز</div>
+        </div>
+      </div>
     </div>
 
-    <script>
-        function calculateGAD() {
-            let total = 0;
-            for (let i = 1; i <= 7; i++) {
-                let answer = document.querySelector('input[name="q' + i + '"]:checked');
-                if (answer) {
-                    total += parseInt(answer.value);
-                }
-            }
-            let resultText = "";
-            if (total <= 4) {
-                resultText = "مستوى القلق بسيط (Mild)";
-            } else if (total <= 9) {
-                resultText = "مستوى القلق متوسط (Moderate)";
-            } else if (total <= 14) {
-                resultText = "مستوى القلق متوسط إلى عالي (Moderately Severe)";
-            } else {
-                resultText = "مستوى القلق شديد (Severe). يُنصح بمراجعة مختص نفسي.";
-            }
-            document.getElementById("result").innerText = "النتيجة: " + resultText;
-        }
-    </script>
+    <!-- Image Banner -->
+    <div class="w-full max-w-4xl h-48 rounded-2xl mx-auto mb-10 overflow-hidden">
+      <img src="images/NAX.png" alt="Qissah Banner" class="w-full h-full object-cover rounded-2xl">
+    </div>
+
+    <!-- Search Bar -->
+    <div class="flex justify-center items-center gap-3 mb-8">
+      <div class="flex items-center search-bar px-6 py-3 rounded-full w-full max-w-xl">
+        <i class="fas fa-search text-gray-400 ml-3"></i>
+        <input type="text" placeholder="ابحث عن روبوتات، قصص، أو منشئين..." class="bg-transparent outline-none text-white text-sm w-full placeholder-gray-400" id="searchInput">
+        <button class="mr-2 text-gray-400 hover:text-white transition" onclick="toggleFilters()">
+          <i class="fas fa-sliders-h"></i>
+        </button>
+      </div>
+      <button class="pulse bg-purple-600 text-white font-bold py-3 px-6 rounded-full flex items-center" onclick="createNewBot()">
+        <i class="fas fa-plus ml-2"></i>
+        روبوت جديد
+      </button>
+    </div>
+
+    <!-- Filters -->
+    <div class="flex justify-center gap-3 mb-8 flex-wrap">
+      <div class="filter-btn text-sm font-medium px-4 py-2 cursor-pointer hover:bg-purple-900 rounded-full" onclick="setFilter('popular')">
+        <i class="fas fa-fire ml-2"></i>
+        الأكثر شيوعاً
+      </div>
+      <div class="filter-btn text-sm font-medium px-4 py-2 cursor-pointer hover:bg-purple-900 rounded-full" onclick="setFilter('new')">
+        <i class="fas fa-bolt ml-2"></i>
+        الجديد
+      </div>
+      <div class="filter-btn filter-selected text-sm font-medium px-4 py-2 cursor-pointer flex items-center gap-2 rounded-full" onclick="setFilter('all')">
+        <i class="fas fa-filter"></i>
+        الفلاتر
+      </div>
+      <div class="filter-btn text-sm font-medium px-4 py-2 cursor-pointer hover:bg-purple-900 rounded-full" onclick="setFilter('best')">
+        <i class="fas fa-crown ml-2"></i>
+        الأفضل
+      </div>
+      <div class="filter-btn text-sm font-medium px-4 py-2 cursor-pointer hover:bg-purple-900 rounded-full" onclick="setFilter('stories')">
+        <i class="fas fa-book ml-2"></i>
+        القصص
+      </div>
+    </div>
+
+    <!-- Content will be loaded here -->
+    <div id="contentArea" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Content will be dynamically loaded here -->
+    </div>
+  </main>
+
+  <script>
+    // Navigation functions
+    function navigate(page) {
+      console.log(`Navigating to: ${page}`);
+      // Here you would typically load content for the selected page
+      document.getElementById('contentArea').innerHTML = `<div class="col-span-full text-center py-10">
+        <i class="fas fa-robot text-5xl text-purple-500 mb-4"></i>
+        <h2 class="text-2xl font-bold mb-2">${getPageTitle(page)}</h2>
+        <p class="text-gray-400">سيتم تحميل محتوى ${getPageTitle(page)} هنا</p>
+      </div>`;
+      
+      // Update active nav item
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('text-purple-400');
+      });
+      event.currentTarget.classList.add('text-purple-400');
+    }
+
+    function getPageTitle(page) {
+      const titles = {
+        'home': 'الصفحة الرئيسية',
+        'chats': 'المحادثات',
+        'create-bot': 'إنشاء روبوت',
+        'my-bots': 'روبوتاتي',
+        'favorites': 'المفضلة',
+        'top-10': 'أفضل 10'
+      };
+      return titles[page] || 'الصفحة';
+    }
+
+    // Login function
+    function login() {
+      console.log('Login button clicked');
+      alert('سيتم توجيهك إلى صفحة تسجيل الدخول');
+    }
+
+    // Profile function
+    function showProfile() {
+      console.log('Profile clicked');
+      alert('سيتم عرض صفحة الملف الشخصي');
+    }
+
+    // Search and filter functions
+    function toggleFilters() {
+      console.log('Toggle filters');
+      alert('سيتم عرض خيارات الفلترة المتقدمة');
+    }
+
+    function setFilter(filter) {
+      console.log(`Filter set to: ${filter}`);
+      // Update active filter
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('filter-selected');
+      });
+      event.currentTarget.classList.add('filter-selected');
+      
+      // Here you would typically filter content
+      document.getElementById('contentArea').innerHTML = `<div class="col-span-full text-center py-10">
+        <i class="fas fa-filter text-5xl text-purple-500 mb-4"></i>
+        <h2 class="text-2xl font-bold mb-2">تم تطبيق الفلتر: ${getFilterTitle(filter)}</h2>
+        <p class="text-gray-400">سيتم عرض المحتوى المفلتر هنا</p>
+      </div>`;
+    }
+
+    function getFilterTitle(filter) {
+      const titles = {
+        'popular': 'الأكثر شيوعاً',
+        'new': 'الجديد',
+        'all': 'الكل',
+        'best': 'الأفضل',
+        'stories': 'القصص'
+      };
+      return titles[filter] || 'الكل';
+    }
+
+    function createNewBot() {
+      console.log('Create new bot');
+      alert('سيتم فتح نموذج إنشاء روبوت جديد');
+    }
+
+    // Initialize with home page
+    window.onload = function() {
+      navigate('home');
+    };
+  </script>
 </body>
 </html>
